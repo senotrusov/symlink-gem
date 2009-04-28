@@ -1,0 +1,93 @@
+#!/usr/bin/env ruby
+# 
+#  Copyright 2006-2008 Stanislav Senotrusov <senotrusov@gmail.com>
+# 
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+# 
+#      http://www.apache.org/licenses/LICENSE-2.0
+# 
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+
+$KCODE = "UTF8"
+
+require 'fileutils'
+
+unless File.exists? 'gem-sources'
+  puts "Creating gem-sources"
+  FileUtils.mkdir 'gem-sources'
+end
+
+unless File.exists? 'bin'
+  puts "Creating bin"
+  FileUtils.mkdir 'bin'
+end
+
+unless File.exists? 'gems'
+  puts "Creating gem"
+  FileUtils.mkdir 'gems'
+end
+
+unless File.exists? 'specifications'
+  puts "Creating specifications"
+  FileUtils.mkdir 'specifications'
+end
+
+puts "Removing gems and specifications content"
+FileUtils.rm Dir.glob('gems/*')
+FileUtils.rm Dir.glob('specifications/*')
+
+Dir.glob('gem-sources/*').each do |gem_path|
+
+  if (specs = Dir.glob("#{gem_path}/*.gemspec")) && !specs.empty?
+    gem_name = File.basename specs.first, ".gemspec"
+    
+    if matchdata = File.read(specs.first).match(/version\s*=\s*"(.*)"/)
+      gem_version = matchdata[1]
+    end
+  end
+  
+  gem_name    ||= File.basename gem_path
+  gem_version ||= "999.0.0"
+
+  puts "Found #{gem_name}-#{gem_version} in #{gem_path}"
+
+  puts "  Creating dummy gemspec"
+  File.open("specifications/#{gem_name}-#{gem_version}.gemspec", 'wb') do |file|
+    file.write <<-END
+Gem::Specification.new do |s|
+  s.name = '#{gem_name}'
+  s.version = '#{gem_version}'
+end
+END
+  end
+  
+  puts "  Creating symlink"
+  FileUtils.symlink("../#{gem_path}", "gems/#{gem_name}-#{gem_version}", :force => true)
+  
+
+  Dir.glob("#{gem_path}/bin/*").each do |bin_file|
+    bin_file = File.basename bin_file
+    bin_file_path = "bin/#{bin_file}"
+
+    puts "  Creating bin/#{bin_file}"
+
+    File.open(bin_file_path, 'wb') do |file|
+      file.write <<-END
+#!/usr/bin/ruby
+require 'rubygems'
+Gem.clear_paths
+Gem.path.unshift('#{Dir.pwd}')
+gem '#{gem_name}'
+load '#{bin_file}'
+END
+    end
+    FileUtils.chmod 0755, bin_file_path
+  end
+end

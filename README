@@ -1,0 +1,59 @@
+
+Development mode for gems - no build and install after each change,
+share gems-in-development between rails/merb apps,
+run executables from local bin folder.
+
+
+Installing
+==========
+gem sources -a http://gems.github.com
+sudo gem install senotrusov-gem-here
+
+
+Staging
+=======
+
+1. cd to your home or projects dir
+
+2. run "gem-here"
+   It will create the following directories: gem-sources, bin, gems, specifications 
+
+3. Place some gem sources to gem-sources (pull it from github, checkout from subversion, etc.)
+
+4. run "gem-here" one more time from the same dir, so it will:
+     - make runners in bin,
+     - create symlinks from gems to gem-sources,
+     - make dummy gem specifications.
+     
+   Gem version will be taken from gemname.gemspec file or it will be 999.0.0
+
+Next you can run bins from your gems using bin/foo. 
+You may want to add bin to your PATH. If you using your home dir for that some Linux added it automatically.
+
+
+Using in rails/other application other than gem/bin
+===================================================
+
+1. Place your application (rails/merb) in directory some level deep from
+   home/project dir where you staged developer gems
+   
+2. require 'gem-here'
+
+3. require any other gem - it will first be searched in gem-sources
+
+
+A picture of that
+=================
+
+~/bin (here be runners for your gem's bin files)
+
+~/gem-sources (your gems working copies)
+~/gem-sources/mygem (like that)
+~/gem-sources/mygem/lib
+~/gem-sources/mygem/mygem.gemspec
+
+~/gems (symlinks here)
+~/specifications (dummy specs here)
+
+~/apps/my-rails-app
+~/my-other-rails-app
