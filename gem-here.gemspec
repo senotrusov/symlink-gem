@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "gem-here"
-  s.version = "1.0.0"
+  s.version = "1.0.1"
 
   s.platform      = Gem::Platform::RUBY
   s.has_rdoc      = true
