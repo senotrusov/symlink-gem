@@ -39,9 +39,10 @@ unless File.exists? 'specifications'
   FileUtils.mkdir 'specifications'
 end
 
-puts "Removing gems and specifications content"
-FileUtils.rm Dir.glob('gems/*')
-FileUtils.rm Dir.glob('specifications/*')
+# TODO
+#puts "Removing gems and specifications content"
+#FileUtils.rm Dir.glob('gems/*')
+#FileUtils.rm Dir.glob('specifications/*')
 
 Dir.glob('gem-sources/*').each do |gem_path|
 
