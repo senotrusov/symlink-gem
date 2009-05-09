@@ -39,10 +39,24 @@ unless File.exists? 'specifications'
   FileUtils.mkdir 'specifications'
 end
 
-# TODO
-#puts "Removing gems and specifications content"
-#FileUtils.rm Dir.glob('gems/*')
-#FileUtils.rm Dir.glob('specifications/*')
+def remove_dummies glob_pattern
+  Dir.glob(glob_pattern).each do |file|
+    if File.read(file) =~ /^#GEM-HERE/
+      puts "Removing #{file}"
+      FileUtils.rm(file)
+    end
+  end
+end
+
+remove_dummies "specifications/*.gemspec"
+remove_dummies "bin/*"
+
+Dir.glob("gems/*").each do |file|
+  if File.symlink?(file)
+    puts "Removing #{file}"
+    FileUtils.rm(file)
+  end
+end
 
 Dir.glob('gem-sources/*').each do |gem_path|
 
@@ -62,6 +76,7 @@ Dir.glob('gem-sources/*').each do |gem_path|
   puts "  Creating dummy gemspec"
   File.open("specifications/#{gem_name}-#{gem_version}.gemspec", 'wb') do |file|
     file.write <<-END
+#GEM-HERE
 Gem::Specification.new do |s|
   s.name = '#{gem_name}'
   s.version = '#{gem_version}'
@@ -82,6 +97,7 @@ END
     File.open(bin_file_path, 'wb') do |file|
       file.write <<-END
 #!/usr/bin/ruby
+#GEM-HERE
 require 'rubygems'
 Gem.clear_paths
 Gem.path.unshift('#{Dir.pwd}')
