@@ -18,6 +18,9 @@
 $KCODE = "UTF8"
 
 require 'fileutils'
+require 'rbconfig'
+
+ruby_executable = File.join(Config::CONFIG["bindir"], Config::CONFIG["ruby_install_name"]) + Config::CONFIG["EXEEXT"]
 
 unless File.exists? 'gem-sources'
   puts "Creating gem-sources"
@@ -96,7 +99,7 @@ END
 
     File.open(bin_file_path, 'wb') do |file|
       file.write <<-END
-#!/usr/bin/ruby
+#!#{ruby_executable}
 #GEM-HERE
 require 'rubygems'
 Gem.clear_paths
