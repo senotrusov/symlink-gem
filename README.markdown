@@ -33,4 +33,4 @@ Install symlink-gem
 
     gem install symlink-gem
 
-[Gemcutter](http://gemcutter.org/)Gemcutter source must be enabled.
+[Gemcutter](http://gemcutter.org/) source must be enabled.
