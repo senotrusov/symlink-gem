@@ -28,8 +28,9 @@ However, this behavior is rely on rubygems and I cannot guarantee that one fine 
 rubygems will not remove all your files from working copy. At least, rubygems 1.3.5 doesn't do that.
 
 
-Install
-=======
+Install symlink-gem
+===================
 
     gem install symlink-gem
 
+[Gemcutter](http://gemcutter.org/)Gemcutter source must be enabled.
