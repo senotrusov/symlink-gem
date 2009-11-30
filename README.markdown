@@ -1,6 +1,6 @@
 
-Install gem by symlinking to your version-controlled (or not) working copy
-==========================================================================
+Install your awesome gem by symlinking to your version-controlled (or not) working copy
+=======================================================================================
 
 If you doesn't want to build & install your gem after every single source code modification
 in your version-controlled (or not) working copy, simply make some symlinks from rubygems folders.
