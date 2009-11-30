@@ -1,5 +1,5 @@
-#
-#  Copyright 2006-2008 Stanislav Senotrusov <senotrusov@gmail.com>
+
+#  Copyright 2009 Stanislav Senotrusov <senotrusov@gmail.com>
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -13,11 +13,21 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-pwd = Dir.pwd.split(/\//)
 
 begin
-  break if File.directory?((pwd + ["gems"]).join("/")) && File.directory?((pwd + ["specifications"]).join("/"))
-end while pwd.pop
+  require 'jeweler'
+  
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "symlink-gem"
+    gemspec.summary = "Install gem by symlinking to your working copy"
+    gemspec.email = "senotrusov@gmail.com"
+    gemspec.homepage = "http://github.com/senotrusov/symlink-gem"
+    gemspec.authors = ["Stanislav Senotrusov"]
+  end
+  
+  Jeweler::GemcutterTasks.new
+  
+rescue LoadError
+  puts "Jeweler not available. Install it with: sudo gem install jeweler"
+end
 
-Gem.clear_paths
-Gem.path.unshift pwd.join("/")
