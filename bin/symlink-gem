@@ -17,22 +17,20 @@
 require 'rubygems'
 require 'fileutils'
 require 'rbconfig'
-require 'pathname'
 
 ruby_executable = File.join(Config::CONFIG["bindir"], Config::CONFIG["ruby_install_name"]) + Config::CONFIG["EXEEXT"]
 pwd = Dir.pwd
 gem_home = Gem.path.last
 
-puts "Trying to `rake gemspec'..."
-puts `rake gemspec`
+puts(rake = `rake gemspec`)
 
-gemspec_file = "#{File.basename pwd}.gemspec"
-    
-unless File.file?(gemspec_file)
-  puts "Gemspec `#{gemspec_file}' not found, aborting."
+if generated = rake.match(/Generated: (.*)/)
+  gemspec_file = generated[1]
+else
+  puts "Can not determine gemspec name from rake output, aborting."
   exit 1
 end
-    
+
 spec = Gem::Specification.load(gemspec_file)
 
 FileUtils.symlink File.join(pwd, gemspec_file), "#{gem_home}/specifications/#{spec.name}-#{spec.version}.gemspec", :force => true, :verbose => true

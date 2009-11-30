@@ -19,7 +19,7 @@ begin
   
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "symlink-gem"
-    gemspec.summary = "Install gem by symlinking to your working copy"
+    gemspec.summary = "If you doesn't want to build & install your gem after every single source code modification in your version-controlled (or not) working copy, simply make some symlinks from rubygems folders."
     gemspec.email = "senotrusov@gmail.com"
     gemspec.homepage = "http://github.com/senotrusov/symlink-gem"
     gemspec.authors = ["Stanislav Senotrusov"]
