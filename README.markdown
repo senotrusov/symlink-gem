@@ -20,7 +20,7 @@ It will:
 Uninstalling your symlinked gem
 -------------------------------
 
-  gem uninstall myawesomegem
+    gem uninstall myawesomegem
   
 will work as expected - it will remove symlinks and executables.
 
