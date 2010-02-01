@@ -37,8 +37,9 @@ FileUtils.symlink File.join(pwd, gemspec_file), "#{gem_home}/specifications/#{sp
 
 symlink_gem_dir = "#{gem_home}/gems/#{spec.name}-#{spec.version}"
 
-if File.symlink?(symlink_gem_dir)
-  FileUtils.rm "#{gem_home}/gems/#{spec.name}-#{spec.version}", :verbose => true
+if File.exists?(symlink_gem_dir)
+  puts "FileUtils.remove_entry_secure \"#{gem_home}/gems/#{spec.name}-#{spec.version}\""
+  FileUtils.remove_entry_secure "#{gem_home}/gems/#{spec.name}-#{spec.version}"
 end
 
 FileUtils.symlink pwd, "#{gem_home}/gems/#{spec.name}-#{spec.version}", :force => true, :verbose => true
