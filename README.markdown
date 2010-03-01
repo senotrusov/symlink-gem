@@ -12,8 +12,8 @@ In your working copy run
 It will:
 
   1. rebuild gemspec using "rake gemspec"
-  2. make symlinks to that spec from "specifications" dir
-  3. make symlinks to the whole directory from "gems" dir
+  2. make symlinks to that spec from rubygems "specifications" dir
+  3. make symlinks to the whole directory from rubygems "gems" dir
   4. make executables in "bin" dir
 
 
@@ -32,5 +32,3 @@ Install symlink-gem
 ===================
 
     gem install symlink-gem
-
-[Gemcutter](http://gemcutter.org/) source must be enabled.
