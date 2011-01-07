@@ -1,4 +1,6 @@
 
+This gem is deprecated since the release of bundler.
+
 Install your awesome gem by symlinking to your version-controlled (or not) working copy
 =======================================================================================
 
