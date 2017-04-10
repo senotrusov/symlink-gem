@@ -1,21 +1,20 @@
 
-    This gem is deprecated since the release of bundler.
-
-## Install symlink-gem
-
-    gem install symlink-gem
-
+This gem is deprecated since the release of bundler.
 
 ## Install your awesome gem by symlinking to your version-controlled (or not) working copy
 
 If you doesn't want to build & install your gem after every single source code modification
 in your version-controlled (or not) working copy, simply make some symlinks from rubygems folders.
 
-In your working copy run
+### Install symlink-gem
+
+    gem install symlink-gem
+
+### In your working copy run
 
     symlink-gem
 
-It will:
+### It will:
 
   1. rebuild gemspec using "rake gemspec"
   2. make symlinks to that spec from rubygems "specifications" dir
